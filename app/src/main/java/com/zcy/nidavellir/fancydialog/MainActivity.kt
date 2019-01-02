@@ -37,9 +37,6 @@ class MainActivity : AppCompatActivity() {
             sureClick {
                 Toast.makeText(this@MainActivity, "sure", Toast.LENGTH_SHORT).show()
             }
-            cancelClick {
-                Toast.makeText(this@MainActivity, "cancel", Toast.LENGTH_SHORT).show()
-            }
         }
     }
 
