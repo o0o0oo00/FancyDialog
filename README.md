@@ -12,8 +12,20 @@ Java使用Builder来构建复杂对象。
 * 如果`lambda`是函数的唯一参数，它可以放在**括号外面**并且**省略括号**
 * 指定接收者的`lambda`
 
-通过`apply(block)` 来配置dialog所需要的参数。而不需要通过不断的`.setXXX`来设置  
+通过`apply(block)` 来配置dialog所需要的参数。而不需要通过不断的`.setXXX`来设置
+
 例如
+
+```
+//  DSL style
+inline fun askDialog(fragmentManager: FragmentManager, dsl: AskDialog.() -> Unit) {
+    if (isDoubleClick()) {
+        return
+    }
+    AskDialog.newInstance().apply(dsl).show(fragmentManager, "dialog")
+}
+```
+使用姿势
 
 ```
 askDialog(supportFragmentManager) {
