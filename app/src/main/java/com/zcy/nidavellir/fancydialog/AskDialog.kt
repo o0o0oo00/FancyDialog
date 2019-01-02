@@ -10,14 +10,8 @@ import android.view.ViewGroup
 
 /**
  * @author:         zhaochunyu
- * @description:    ${DESP}
+ * @description:    BaseFragmentDialog 使用范例
  * @date:           2019/1/2
- */
-
-/**
- * @author:       zhaochunyu
- * @description:  BaseFragmentDialog 使用范例
- * @date:         2018/12/26
  */
 
 //  DSL style
