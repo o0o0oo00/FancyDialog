@@ -20,9 +20,6 @@ import android.widget.Toast
  */
 
 inline fun editDialog(fragmentManager: FragmentManager, dsl: DSLEditDialog.() -> Unit) {
-    if (isDoubleClick()) {
-        return
-    }
     DSLEditDialog.newInstance().apply(dsl).show(fragmentManager, "dialog")
 }
 
@@ -80,7 +77,7 @@ class DSLEditDialog : BaseFragmentDialog() {
                         sure?.isEnabled = true
                         sure?.alpha = 1F
                         if (s.length > mMaxLength) {
-                           Toast.makeText(context,"太多了",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(context, "太多了", Toast.LENGTH_SHORT).show()
                             edit?.let {
                                 val selectionStart = it.selectionStart
                                 val selectionEnd = it.selectionEnd
@@ -132,8 +129,10 @@ class DSLEditDialog : BaseFragmentDialog() {
 
     override fun show(manager: FragmentManager?, tag: String?) {
         Handler(Looper.getMainLooper()).postDelayed({
-            edit.showSoft()
-        }, 100)
+            if (this::edit.isInitialized) {
+                edit.showSoft()
+            }
+        }, 200)
         super.show(manager, tag)
     }
 

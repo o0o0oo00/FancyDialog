@@ -1,5 +1,6 @@
 package com.zcy.nidavellir.fancydialog
 
+import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.AppCompatTextView
@@ -16,10 +17,8 @@ import android.view.ViewGroup
 
 //  DSL style
 inline fun askDialog(fragmentManager: FragmentManager, dsl: AskDialog.() -> Unit) {
-    if (isDoubleClick()) {
-        return
-    }
-    AskDialog.newInstance().apply(dsl).show(fragmentManager, "dialog")
+    val dialog = AskDialog.newInstance().apply(dsl)
+    dialog.show(fragmentManager, "dialog")
 }
 
 open class AskDialog : BaseFragmentDialog() {

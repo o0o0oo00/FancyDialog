@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.support.v4.app.DialogFragment
+import android.support.v4.app.FragmentManager
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
@@ -26,8 +27,9 @@ abstract class BaseFragmentDialog : DialogFragment() {
     var mGravity = Gravity.CENTER
     var mOffsetX = 0
     var mOffsetY = 0
-    var mAnimation = R.style.DialogAnimation
+    var mAnimation: Int? = null
     var touchOutside: Boolean = true
+    var lowerBackground = true // 是否降级背景，例如图片预览的时候不可以降级（设置Activity的透明度）
     lateinit var mContext: Context
 
     override fun onAttach(context: Context) {
@@ -39,19 +41,76 @@ abstract class BaseFragmentDialog : DialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setStyle()
-        return setView(inflater, container, savedInstanceState)
+        val view = setView(inflater, container, savedInstanceState)
+        viewLoaded?.loaded(view)
+        return view
     }
 
     /**** 降低背景的Window等级 ****/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mContext.setBackgroundAlpha(0.35F)
+        if (lowerBackground) mContext.setBackgroundAlpha(0.35F)
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {
-        mContext.setBackgroundAlpha(1F)
+        if (lowerBackground) mContext.setBackgroundAlpha(1F)
         super.onDestroyView()
+    }
+
+    /**
+     * 防止同时弹出两个dialog
+     */
+    override fun show(manager: FragmentManager?, tag: String?) {
+        if (isDoubleClick()) {
+            return
+        }
+        showListener?.show()
+        super.show(manager, tag)
+    }
+
+    override fun dismiss() {
+        disListener?.dismiss()
+        super.dismiss()
+    }
+
+    var showListener: onShow? = null
+    var disListener: onDismiss? = null
+
+    /**
+     * 显示回调
+     */
+    fun onShowListener(listener: onShow) {
+        this.showListener = listener
+    }
+
+    /**
+     * 消失回调
+     */
+    fun onDismissListener(listener: onDismiss) {
+        this.disListener = listener
+    }
+
+    interface onShow {
+        fun show()
+    }
+
+    interface onDismiss {
+        fun dismiss()
+    }
+
+    var viewLoaded: onViewLoaded? = null
+
+    interface onViewLoaded {
+        fun loaded(v: View)
+    }
+
+    /**
+     * 布局加载完成监听事件
+     * 用于 获取布局中的 view
+     */
+    fun onViewLoaded(listener: onViewLoaded) {
+        this.viewLoaded = listener
     }
 
 
@@ -65,7 +124,7 @@ abstract class BaseFragmentDialog : DialogFragment() {
         dialog.requestWindowFeature(DialogFragment.STYLE_NO_TITLE)
         // 透明背景
         window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        window.setDimAmount(0F) // 去除 dialog 弹出的阴影
+        if (lowerBackground) window.setDimAmount(0F) // 去除 dialog 弹出的阴影
         dialog.setCanceledOnTouchOutside(touchOutside)
         //设置宽高
         window!!.decorView.setPadding(0, 0, 0, 0)
@@ -78,7 +137,7 @@ abstract class BaseFragmentDialog : DialogFragment() {
         wlp.x = dialog.context.dp2px(mOffsetX.toFloat())
         wlp.y = dialog.context.dp2px(mOffsetY.toFloat())
         //设置动画
-//        window.setWindowAnimations(mAnimation)
+        mAnimation?.also { window.setWindowAnimations(it) }
         window.attributes = wlp
     }
 

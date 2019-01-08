@@ -1,0 +1,57 @@
+package com.zcy.nidavellir.fancydialog
+
+import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.widget.LinearLayout
+import com.zcy.nidavellir.fancydialog.list.ClickListener
+import com.zcy.nidavellir.fancydialog.list.ListDialogAdapter
+
+/**
+ * @author:         zhaochunyu
+ * @description:    ${DESP}
+ * @date:           2019/1/8
+ */
+
+// list点击事件一定是要暴露给外部的，所以，将实例返回出去，以便于onclick时候调用dismiss()
+inline fun listDialog(block: ListDialog.() -> Unit): ListDialog {
+    val dialog = ListDialog.newInstance()
+    dialog.apply(block)
+    return dialog
+}
+
+class ListDialog : BaseFragmentDialog() {
+    var mLayoutManager: RecyclerView.LayoutManager? = null
+    var mParentPadding: Int = 0
+    var mPaddingTop: Int = MyApp.instance.dp2px(10F)
+    var mPaddingLeft: Int = 0
+    var mPaddingRight: Int = 0
+    var mPaddingBottom: Int = 0
+    var mBackground: Int? = null
+    var mAdapter: ListDialogAdapter = ListDialogAdapter()
+    var mItemDecoration: RecyclerView.ItemDecoration? = null
+
+    override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
+        val view = inflater.inflate(R.layout.layout_list_dialog, container, false)
+        view.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom)
+        mBackground?.let { view.background = resources.getDrawable(it) }
+        val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
+        recyclerView.layoutManager = mLayoutManager ?: LinearLayoutManager(mContext, LinearLayout.VERTICAL, false)
+        recyclerView.adapter = mAdapter
+        mItemDecoration?.also { recyclerView.addItemDecoration(it) }
+        return view
+    }
+
+    inline fun listSetting(listener: ClickListener, block: MutableList<Any>.() -> Unit) {
+        mAdapter.list.apply(block)
+        mAdapter.setOnClickListener(listener)
+    }
+
+    companion object {
+        fun newInstance() = ListDialog()
+    }
+
+}

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
+import com.zcy.nidavellir.fancydialog.list.ClickListener
 
 class MainActivity : AppCompatActivity() {
 
@@ -63,5 +64,28 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this@MainActivity, it, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    fun list(view: View) {
+        lateinit var dialog: ListDialog
+        val listener = object : ClickListener {
+            override fun onItemLongClick(position: Int, v: View) {
+
+            }
+
+            override fun onItemClick(position: Int, v: View) {
+                dialog.dismiss()
+                Toast.makeText(this@MainActivity, (v.tag as String), Toast.LENGTH_SHORT).show()
+            }
+
+        }
+        dialog = listDialog {
+            listSetting(listener) {
+                add("第一头条")
+                add("第二头条")
+                add("_(:з」∠)_")
+            }
+        }
+        dialog.show(supportFragmentManager,"dialog")
     }
 }
