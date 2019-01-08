@@ -95,6 +95,28 @@ editDialog(supportFragmentManager) {
 <img src="https://raw.githubusercontent.com/o0o0oo00/FancyDialog/master/mdimage/S90102-163127.jpg" width="20%" height="20%">
 
 ### listDialog
-待续...
+```
+lateinit var dialog: ListDialog
+val listener = object : ClickListener {
+    override fun onItemLongClick(position: Int, v: View) {
+
+    }
+
+    override fun onItemClick(position: Int, v: View) {
+        dialog.dismiss()
+        Toast.makeText(this@MainActivity, (v.tag as String), Toast.LENGTH_SHORT).show()
+    }
+
+}
+dialog = listDialog {
+    listSetting(listener) {
+        add("第一头条")
+        add("第二头条")
+        add("_(:з」∠)_")
+    }
+}
+dialog.show(supportFragmentManager,"dialog")
+```
+<img src="https://raw.githubusercontent.com/o0o0oo00/FancyDialog/master/mdimage/S90102-163127.jpg" width="20%" height="20%">
 ### customDialog
 待续...
