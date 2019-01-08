@@ -117,6 +117,6 @@ dialog = listDialog {
 }
 dialog.show(supportFragmentManager,"dialog")
 ```
-<img src="https://raw.githubusercontent.com/o0o0oo00/FancyDialog/master/mdimage/S90102-163127.jpg" width="20%" height="20%">
+<img src="https://raw.githubusercontent.com/o0o0oo00/FancyDialog/master/mdimage/S90108-153438.jpg" width="20%" height="20%">
 ### customDialog
 待续...
