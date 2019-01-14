@@ -101,26 +101,25 @@ editDialog(supportFragmentManager) {
 
 ### listDialog
 ```
-lateinit var dialog: ListDialog
-val listener = object : ClickListener {
-    override fun onItemLongClick(position: Int, v: View) {
-
-    }
-
-    override fun onItemClick(position: Int, v: View) {
-        dialog.dismiss()
-        Toast.makeText(this@MainActivity, (v.tag as String), Toast.LENGTH_SHORT).show()
-    }
-
+fun list(view: View) {
+	lateinit var dialog: ListDialog
+	val click: (View, Int) -> Unit = { v, position ->
+	    dialog.dismiss()
+	    Toast.makeText(this@MainActivity, (v.tag as String), Toast.LENGTH_SHORT).show()
+	}
+	val longClick: (View, Int) -> Unit = { v, position ->
+	//            dialog.dismiss()
+	    Toast.makeText(this@MainActivity, "longClick" + (v.tag as String), Toast.LENGTH_SHORT).show()
+	}
+	dialog = listDialog {
+	    listSetting(click, longClick) {
+	        add("第一头条")
+	        add("第二头条")
+	        add("_(:з」∠)_")
+	    }
+	}
+	dialog.show(supportFragmentManager, "dialog")
 }
-dialog = listDialog {
-    listSetting(listener) {
-        add("第一头条")
-        add("第二头条")
-        add("_(:з」∠)_")
-    }
-}
-dialog.show(supportFragmentManager,"dialog")
 ```
 <img src="https://raw.githubusercontent.com/o0o0oo00/FancyDialog/master/mdimage/S90108-153438.jpg" width="20%" height="20%">
 ### customDialog

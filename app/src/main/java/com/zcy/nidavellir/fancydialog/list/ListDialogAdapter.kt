@@ -32,11 +32,20 @@ class ListDialogAdapter : RecyclerView.Adapter<ListDialogViewHolder>() {
             onClickListener?.invoke(view, p1)
         }
 
+        view.setOnLongClickListener {
+            onLongClickListener?.invoke(view, p1)
+            return@setOnLongClickListener true
+        }
+
         return ListDialogViewHolder(view)
     }
 
     fun setOnClickListener(listener: (View, Int) -> Unit) {
         onClickListener = listener
+    }
+
+    fun setOnLongClickListener(listener: (View, Int) -> Unit) {
+        onLongClickListener = listener
     }
 
 }

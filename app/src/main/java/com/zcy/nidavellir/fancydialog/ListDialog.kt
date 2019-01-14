@@ -44,9 +44,14 @@ class ListDialog : BaseFragmentDialog() {
         return view
     }
 
-    inline fun listSetting(noinline onClick: (View, Int) -> Unit, block: MutableList<Any>.() -> Unit) {
+    inline fun listSetting(
+        noinline onClick: (View, Int) -> Unit,
+        noinline onLoneClick: (View, Int) -> Unit,
+        block: MutableList<Any>.() -> Unit
+    ) {
         mAdapter.list.apply(block)
         mAdapter.setOnClickListener(onClick)
+        mAdapter.setOnLongClickListener(onLoneClick)
     }
 
     companion object {

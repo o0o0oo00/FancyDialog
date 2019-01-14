@@ -71,8 +71,12 @@ class MainActivity : AppCompatActivity() {
             dialog.dismiss()
             Toast.makeText(this@MainActivity, (v.tag as String), Toast.LENGTH_SHORT).show()
         }
+        val longClick: (View, Int) -> Unit = { v, position ->
+//            dialog.dismiss()
+            Toast.makeText(this@MainActivity, "longClick" + (v.tag as String), Toast.LENGTH_SHORT).show()
+        }
         dialog = listDialog {
-            listSetting(click) {
+            listSetting(click, longClick) {
                 add("第一头条")
                 add("第二头条")
                 add("_(:з」∠)_")
