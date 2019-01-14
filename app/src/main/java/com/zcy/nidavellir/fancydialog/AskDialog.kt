@@ -1,6 +1,5 @@
 package com.zcy.nidavellir.fancydialog
 
-import android.app.ProgressDialog.show
 import android.os.Bundle
 import android.support.v4.app.FragmentManager
 import android.support.v7.widget.AppCompatTextView

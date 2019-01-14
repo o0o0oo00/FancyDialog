@@ -7,7 +7,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
-import com.zcy.nidavellir.fancydialog.list.ClickListener
 import com.zcy.nidavellir.fancydialog.list.ListDialogAdapter
 
 /**
@@ -45,9 +44,9 @@ class ListDialog : BaseFragmentDialog() {
         return view
     }
 
-    inline fun listSetting(listener: ClickListener, block: MutableList<Any>.() -> Unit) {
+    inline fun listSetting(noinline onClick: (View, Int) -> Unit, block: MutableList<Any>.() -> Unit) {
         mAdapter.list.apply(block)
-        mAdapter.setOnClickListener(listener)
+        mAdapter.setOnClickListener(onClick)
     }
 
     companion object {

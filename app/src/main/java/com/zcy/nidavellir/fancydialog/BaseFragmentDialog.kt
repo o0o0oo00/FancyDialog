@@ -29,8 +29,14 @@ abstract class BaseFragmentDialog : DialogFragment() {
     var mOffsetY = 0
     var mAnimation: Int? = null
     var touchOutside: Boolean = true
-    var lowerBackground = true // 是否降级背景，例如图片预览的时候不可以降级（设置Activity的透明度）
+    var lowerBackground = false // 是否降级背景，例如图片预览的时候不可以降级（设置Activity的透明度）
     lateinit var mContext: Context
+
+    /****** listener ******/
+    private var viewLoadedListener: ((View) -> Unit)? = null
+    private var showListener: (() -> Unit)? = null
+    private var disListener: (() -> Unit)? = null
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
@@ -42,7 +48,7 @@ abstract class BaseFragmentDialog : DialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         setStyle()
         val view = setView(inflater, container, savedInstanceState)
-        viewLoaded?.loaded(view)
+        viewLoadedListener?.invoke(view)
         return view
     }
 
@@ -65,54 +71,30 @@ abstract class BaseFragmentDialog : DialogFragment() {
         if (isDoubleClick()) {
             return
         }
-        showListener?.show()
+        showListener?.invoke()
         super.show(manager, tag)
     }
 
     override fun dismiss() {
-        disListener?.dismiss()
+        disListener?.invoke()
         super.dismiss()
     }
 
-    var showListener: onShow? = null
-    var disListener: onDismiss? = null
-
-    /**
-     * 显示回调
-     */
-    fun onShowListener(listener: onShow) {
-        this.showListener = listener
+    fun onShow(listener: () -> Unit){
+        showListener = listener
     }
 
-    /**
-     * 消失回调
-     */
-    fun onDismissListener(listener: onDismiss) {
-        this.disListener = listener
-    }
-
-    interface onShow {
-        fun show()
-    }
-
-    interface onDismiss {
-        fun dismiss()
-    }
-
-    var viewLoaded: onViewLoaded? = null
-
-    interface onViewLoaded {
-        fun loaded(v: View)
+    fun onDismiss(listener: () -> Unit){
+        disListener = listener
     }
 
     /**
      * 布局加载完成监听事件
      * 用于 获取布局中的 view
      */
-    fun onViewLoaded(listener: onViewLoaded) {
-        this.viewLoaded = listener
+    fun onViewLoaded(listener: (View) -> Unit) {
+        viewLoadedListener = listener
     }
-
 
     /**
      * 设置统一样式

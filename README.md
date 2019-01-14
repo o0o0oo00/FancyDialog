@@ -2,26 +2,31 @@
 ## DSL风格代替Builder模式
 
 ### 什么是DSL
-domain specific language / DSL  
+domain specific language / DSL  **一组特定的语言结构**  
+DSL风格或者也可以说是**函数式风格**  
 Java使用Builder来构建复杂对象。  
-而Kotlin配合lambad 使用DSL风格 将使复杂对象的构建更加可读，更清晰，更简洁
+而Kotlin中配合**lambad** 使用DSL风格 将使复杂对象的构建更加可读，更清晰，更简洁
+
+书写起来**顺风顺水又顺手**
 
 首先我们要明白`lambda`的几个特性
 
 * 如果`lambda`是函数的最后一个参数，可以放在**括号外面**
 * 如果`lambda`是函数的唯一参数，它可以放在**括号外面**并且**省略括号**
 * 指定接收者的`lambda`
+* 高阶函数代替传统的自定义回调接口
 
-通过`apply(block)` 来配置dialog所需要的参数。而不需要通过不断的`.setXXX`来设置
+通过**`apply(block)`** 来配置dialog所需要的参数。而不需要通过不断的**`.setXXX`**来设置
+
+>Tips :   
+使用高阶函数会带来一些运行时的效率损失：每一个函数都是一个对象，并且会捕获一个闭包。 即那些在函数体内会访问到的变量。 内存分配（对于函数对象和类）和虚拟调用会引入运行时间开销。  
+进而使用 **`inline`** 修饰函数
 
 例如
 
 ```
 //  DSL style
 inline fun askDialog(fragmentManager: FragmentManager, dsl: AskDialog.() -> Unit) {
-    if (isDoubleClick()) {
-        return
-    }
     AskDialog.newInstance().apply(dsl).show(fragmentManager, "dialog")
 }
 ```

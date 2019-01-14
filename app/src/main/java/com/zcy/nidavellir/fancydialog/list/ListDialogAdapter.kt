@@ -14,7 +14,9 @@ import kotlinx.android.synthetic.main.item_list_dialog.view.*
  */
 class ListDialogAdapter : RecyclerView.Adapter<ListDialogViewHolder>() {
     val list: MutableList<Any> = mutableListOf()
-    private var onClickListener: ClickListener? = null
+    private var onClickListener: ((View, Int) -> Unit)? = null
+    private var onLongClickListener: ((View, Int) -> Unit)? = null
+
     override fun getItemCount(): Int {
         return list.size
     }
@@ -27,20 +29,16 @@ class ListDialogAdapter : RecyclerView.Adapter<ListDialogViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ListDialogViewHolder {
         val view = LayoutInflater.from(p0.context).inflate(R.layout.item_list_dialog, p0, false)
         view.setOnClickListener {
-            onClickListener?.onItemClick(p1, view)
+            onClickListener?.invoke(view, p1)
         }
 
         return ListDialogViewHolder(view)
     }
 
-    fun setOnClickListener(onClickListener: ClickListener) {
-        this.onClickListener = onClickListener
+    fun setOnClickListener(listener: (View, Int) -> Unit) {
+        onClickListener = listener
     }
 
 }
 
 class ListDialogViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-interface ClickListener {
-    fun onItemClick(position: Int, v: View)
-    fun onItemLongClick(position: Int, v: View)
-}
