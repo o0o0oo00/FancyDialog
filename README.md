@@ -22,22 +22,8 @@ Java使用Builder来构建复杂对象。
 使用高阶函数会带来一些运行时的效率损失：每一个函数都是一个对象，并且会捕获一个闭包。 即那些在函数体内会访问到的变量。 内存分配（对于函数对象和类）和虚拟调用会引入运行时间开销。  
 进而使用 **`inline`** 修饰函数
 
-例如
-
-```
-//  DSL style
-inline fun askDialog(fragmentManager: FragmentManager, dsl: AskDialog.() -> Unit) {
-    AskDialog.newInstance().apply(dsl).show(fragmentManager, "dialog")
-}
-```
 使用姿势
 
-```
-askDialog(supportFragmentManager) {
-    mTitle = "标题"
-    mMessage = "内容"
-}
-```
 下面提供几种常见的dialog使用形式
 
 ### askDialog
