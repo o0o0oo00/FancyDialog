@@ -30,7 +30,7 @@ Java使用Builder来构建复杂对象。
 * `mGravity` 居中/居*
 * `mOffsetX` / `mOffsetY` 位置偏移量
 * `touchOutside` 触摸外部消失
-* `lowerBackground` 降级dialog背景，配合[newToast](https://github.com/o0o0oo00/NewToast)
+* `lowerBackground` 降级dialog背景，配合[newToast](https://github.com/o0o0oo00/NewToast)可实现 Alert警告框不会被Dialog阴影覆盖掉
 
 下面提供几种常见的dialog使用形式
 
