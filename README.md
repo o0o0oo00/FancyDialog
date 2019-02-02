@@ -7,7 +7,7 @@ DSL风格或者也可以说是**函数式风格**
 Java使用Builder来构建复杂对象。  
 而Kotlin中配合**lambad** 使用DSL风格 将使复杂对象的构建更加可读，更清晰，更简洁
 
-书写起来**顺风顺水又顺手**
+书写起来**舒服顺手**
 
 首先我们要明白`lambda`的几个特性
 
@@ -23,6 +23,14 @@ Java使用Builder来构建复杂对象。
 进而使用 **`inline`** 修饰函数
 
 使用姿势
+
+关键属性解析
+
+* `mWidth` / `mHeight` 宽度和高度
+* `mGravity` 居中/居*
+* `mOffsetX` / `mOffsetY` 位置偏移量
+* `touchOutside` 触摸外部消失
+* `lowerBackground` 降级dialog背景，配合[newToast](https://github.com/o0o0oo00/NewToast)
 
 下面提供几种常见的dialog使用形式
 
