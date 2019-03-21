@@ -1,11 +1,11 @@
 package com.zcy.nidavellir.fancydialog
 
 import android.os.Bundle
-import android.support.v4.app.FragmentManager
-import android.support.v7.widget.AppCompatTextView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.FragmentManager
 
 /**
  * @author:         zhaochunyu

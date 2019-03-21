@@ -5,7 +5,7 @@
     android:layout_centerInParent="true"
     android:background="@drawable/widget_view_radius">
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:textSize="17sp"
         android:textStyle="bold" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/desc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -33,7 +33,7 @@
         android:textSize="14sp"
         android:textStyle="normal" />
 
-    <android.support.v7.widget.AppCompatTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/desc"
@@ -44,7 +44,7 @@
         android:textColor="#C3C3C3"
         android:textSize="20sp" />
 
-    <android.support.v7.widget.AppCompatEditText
+    <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/labelEdit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -75,7 +75,7 @@
         android:layout_below="@+id/line"
         android:orientation="horizontal">
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/cancel"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -91,7 +91,7 @@
             android:layout_height="match_parent"
             android:background="#ECECEC" />
 
-        <android.support.v7.widget.AppCompatTextView
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/sure"
             android:layout_width="0dp"
             android:layout_height="match_parent"

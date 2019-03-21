@@ -1,12 +1,12 @@
 package com.zcy.nidavellir.fancydialog
 
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.zcy.nidavellir.fancydialog.list.ListDialogAdapter
 
 /**
@@ -38,7 +38,7 @@ class ListDialog : BaseFragmentDialog() {
         view.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom)
         mBackground?.let { view.background = resources.getDrawable(it) }
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.layoutManager = mLayoutManager ?: LinearLayoutManager(mContext, LinearLayout.VERTICAL, false)
+        recyclerView.layoutManager = mLayoutManager ?: LinearLayoutManager(mContext, RecyclerView.VERTICAL, false)
         recyclerView.adapter = mAdapter
         mItemDecoration?.also { recyclerView.addItemDecoration(it) }
         return view

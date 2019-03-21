@@ -3,15 +3,15 @@ package com.zcy.nidavellir.fancydialog
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.support.v4.app.FragmentManager
-import android.support.v7.widget.AppCompatEditText
-import android.support.v7.widget.AppCompatTextView
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.widget.AppCompatEditText
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.fragment.app.FragmentManager
 
 /**
  * @author:         zhaochunyu
@@ -127,7 +127,7 @@ class DSLEditDialog : BaseFragmentDialog() {
         rightClicks = onClick
     }
 
-    override fun show(manager: FragmentManager?, tag: String?) {
+    override fun show(manager: FragmentManager, tag: String?) {
         Handler(Looper.getMainLooper()).postDelayed({
             if (this::edit.isInitialized) {
                 edit.showSoft()

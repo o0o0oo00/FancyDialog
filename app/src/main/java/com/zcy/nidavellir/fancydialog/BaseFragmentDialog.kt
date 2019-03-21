@@ -4,13 +4,13 @@ import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.support.v4.app.DialogFragment
-import android.support.v4.app.FragmentManager
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.FragmentManager
 
 
 /**
@@ -43,6 +43,7 @@ abstract class BaseFragmentDialog : DialogFragment() {
         mContext = context
     }
 
+
     protected abstract fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -67,12 +68,29 @@ abstract class BaseFragmentDialog : DialogFragment() {
     /**
      * 防止同时弹出两个dialog
      */
-    override fun show(manager: FragmentManager?, tag: String?) {
-        if (isDoubleClick()) {
+    override fun show(manager: FragmentManager, tag: String?) {
+        if (isDoubleClick() || activity?.isFinishing == true) {
             return
         }
         showListener?.invoke()
-        super.show(manager, tag)
+//        super.show(manager, tag)
+        setBooleanField("mDismissed", false)
+        setBooleanField("mShownByMe", true)
+        val ft = manager.beginTransaction()
+        ft.add(this, tag)
+        ft.commitAllowingStateLoss()
+    }
+
+    private fun setBooleanField(fieldName: String, value: Boolean) {
+        try {
+            val field = DialogFragment::class.java.getDeclaredField(fieldName)
+            field.isAccessible = true
+            field.set(this, value)
+        } catch (e: NoSuchFieldException) {
+            e.printStackTrace()
+        } catch (e: IllegalAccessException) {
+            e.printStackTrace()
+        }
     }
 
     override fun dismiss() {
@@ -80,11 +98,11 @@ abstract class BaseFragmentDialog : DialogFragment() {
         super.dismiss()
     }
 
-    fun onShow(listener: () -> Unit){
+    fun onShow(listener: () -> Unit) {
         showListener = listener
     }
 
-    fun onDismiss(listener: () -> Unit){
+    fun onDismiss(listener: () -> Unit) {
         disListener = listener
     }
 
@@ -101,13 +119,13 @@ abstract class BaseFragmentDialog : DialogFragment() {
      */
     private fun setStyle() {
         //获取Window
-        val window = dialog.window
+        val window = dialog?.window
         //无标题
-        dialog.requestWindowFeature(DialogFragment.STYLE_NO_TITLE)
+        dialog?.requestWindowFeature(DialogFragment.STYLE_NO_TITLE)
         // 透明背景
-        window.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        if (lowerBackground) window.setDimAmount(0F) // 去除 dialog 弹出的阴影
-        dialog.setCanceledOnTouchOutside(touchOutside)
+        window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        if (lowerBackground) window?.setDimAmount(0F) // 去除 dialog 弹出的阴影
+        dialog?.setCanceledOnTouchOutside(touchOutside)
         //设置宽高
         window!!.decorView.setPadding(0, 0, 0, 0)
         val wlp = window.attributes
@@ -116,8 +134,8 @@ abstract class BaseFragmentDialog : DialogFragment() {
         //设置对齐方式
         wlp.gravity = mGravity
         //设置偏移量
-        wlp.x = dialog.context.dp2px(mOffsetX.toFloat())
-        wlp.y = dialog.context.dp2px(mOffsetY.toFloat())
+        wlp.x = dialog?.context?.dp2px(mOffsetX.toFloat()) ?: 0
+        wlp.y = dialog?.context?.dp2px(mOffsetY.toFloat()) ?: 0
         //设置动画
         mAnimation?.also { window.setWindowAnimations(it) }
         window.attributes = wlp
