@@ -1,13 +1,12 @@
-package com.zcy.nidavellir.fancydialog
+package com.zcy.fancydialog
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.zcy.nidavellir.fancydialog.list.ListDialogAdapter
+import com.zcy.fancydialog.list.ListDialogAdapter
 
 /**
  * @author:         zhaochunyu

@@ -1,10 +1,10 @@
-package com.zcy.nidavellir.fancydialog.list
+package com.zcy.fancydialog.list
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.zcy.nidavellir.fancydialog.R
+import com.zcy.fancydialog.R
 import kotlinx.android.synthetic.main.item_list_dialog.view.*
 
 /**

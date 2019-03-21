@@ -1,5 +1,6 @@
-package com.zcy.nidavellir.fancydialog
+package com.zcy.fancydialog
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -8,7 +9,8 @@ import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.WindowManager
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.widget.AppCompatEditText
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.fragment.app.FragmentManager
@@ -18,7 +20,6 @@ import androidx.fragment.app.FragmentManager
  * @description:    带输入框的Dialog
  * @date:           2019/1/2
  */
-
 inline fun editDialog(fragmentManager: FragmentManager, dsl: DSLEditDialog.() -> Unit) {
     DSLEditDialog.newInstance().apply(dsl).show(fragmentManager, "dialog")
 }
@@ -40,9 +41,16 @@ class DSLEditDialog : BaseFragmentDialog() {
     private var leftClicks: (() -> Unit)? = null
     private var rightClicks: ((String) -> Unit)? = null
 
+    private lateinit var rootView: View
+
+    init {
+        lowerBackground = true
+    }
+
     private lateinit var edit: AppCompatEditText
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.layout_edit_dialog, container, false)
+        rootView = view
         edit = view.findViewById<AppCompatEditText>(R.id.labelEdit)
         edit.setText(mDefault)
         mHint?.let {
@@ -53,9 +61,7 @@ class DSLEditDialog : BaseFragmentDialog() {
         val sure = view.findViewById<AppCompatTextView>(R.id.sure)
         val title = view.findViewById<AppCompatTextView>(R.id.title)
         val message = view.findViewById<AppCompatTextView>(R.id.desc)
-        mTitle?.also {
-            title.text = mTitle
-        }
+        title.text = mTitle
         mMessage?.let {
             message.isVisibility(true)
             message.text = it
@@ -77,13 +83,12 @@ class DSLEditDialog : BaseFragmentDialog() {
                         sure?.isEnabled = true
                         sure?.alpha = 1F
                         if (s.length > mMaxLength) {
-                            Toast.makeText(context, "太多了", Toast.LENGTH_SHORT).show()
-                            edit?.let {
+                            edit.let {
                                 val selectionStart = it.selectionStart
                                 val selectionEnd = it.selectionEnd
                                 s.delete(selectionStart - 1, selectionEnd)
                                 it.text = s
-                                it.setSelection(it.text!!.length)
+                                it.setSelection(it.text.toString().length)
                                 return@TAG
                             }
                         }
@@ -105,7 +110,7 @@ class DSLEditDialog : BaseFragmentDialog() {
 
         sure.setOnClickListener {
             rightClicks?.let { onClick ->
-                onClick(edit.text!!.trim().toString())
+                onClick(edit.text.toString().trim())
             }
             dismiss()
         }
@@ -127,12 +132,24 @@ class DSLEditDialog : BaseFragmentDialog() {
         rightClicks = onClick
     }
 
+    override fun dismiss() {
+        Handler(Looper.getMainLooper()).post { hintPopInput(rootView) }
+        super.dismiss()
+    }
+
+    private fun hintPopInput(view: View) {
+        val imm = mContext.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+        imm?.hideSoftInputFromWindow(view.windowToken, 2)
+        activity?.window?.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN)
+    }
+
+
     override fun show(manager: FragmentManager, tag: String?) {
         Handler(Looper.getMainLooper()).postDelayed({
             if (this::edit.isInitialized) {
                 edit.showSoft()
             }
-        }, 200)
+        }, 100)
         super.show(manager, tag)
     }
 

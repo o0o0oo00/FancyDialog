@@ -1,4 +1,4 @@
-package com.zcy.nidavellir.fancydialog
+package com.zcy.fancydialog
 
 import android.app.Activity
 import android.content.Context

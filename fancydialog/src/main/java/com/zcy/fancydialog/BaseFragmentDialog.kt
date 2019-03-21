@@ -1,4 +1,4 @@
-package com.zcy.nidavellir.fancydialog
+package com.zcy.fancydialog
 
 import android.content.Context
 import android.graphics.Color
