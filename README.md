@@ -2,6 +2,16 @@
 
 [![](https://jitpack.io/v/o0o0oo00/FancyDialog.svg)](https://jitpack.io/#o0o0oo00/FancyDialog)
 
+## Usage
+```
+allprojects {
+    repositories {
+    ...
+     maven { url 'https://jitpack.io' }
+```
+```
+ implementation 'com.github.o0o0oo00:FancyDialog:1.0.0'
+```
 
 ## DSL风格代替Builder模式
 
