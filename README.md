@@ -10,7 +10,7 @@ allprojects {
      maven { url 'https://jitpack.io' }
 ```
 ```
- implementation 'com.github.o0o0oo00:FancyDialog:1.0.0'
+ implementation 'com.github.o0o0oo00:FancyDialog:version'
 ```
 
 ## DSL风格代替Builder模式
