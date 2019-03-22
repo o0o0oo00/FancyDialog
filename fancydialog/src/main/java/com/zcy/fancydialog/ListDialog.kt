@@ -24,7 +24,7 @@ inline fun listDialog(block: ListDialog.() -> Unit): ListDialog {
 class ListDialog : BaseFragmentDialog() {
     var mLayoutManager: RecyclerView.LayoutManager? = null
     var mParentPadding: Int = 0
-    var mPaddingTop: Int = MyApp.instance.dp2px(10F)
+    var mPaddingTop: Int = 0
     var mPaddingLeft: Int = 0
     var mPaddingRight: Int = 0
     var mPaddingBottom: Int = 0
@@ -34,6 +34,7 @@ class ListDialog : BaseFragmentDialog() {
 
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.layout_list_dialog, container, false)
+        mPaddingTop = mContext.dp2px(10F)
         view.setPadding(mPaddingLeft, mPaddingTop, mPaddingRight, mPaddingBottom)
         mBackground?.let { view.background = resources.getDrawable(it) }
         val recyclerView = view.findViewById<RecyclerView>(R.id.recyclerView)

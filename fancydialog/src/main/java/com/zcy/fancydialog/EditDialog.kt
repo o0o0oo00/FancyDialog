@@ -31,13 +31,13 @@ class DSLEditDialog : BaseFragmentDialog() {
     var mMessage: String? = null
     var mHint: String? = null
     var mDefault: String = ""
-    var mColor: Int = MyApp.instance.color(R.color.colorAccent)
+    var mColor: Int = 0
     var mPosition: Int? = null
     var mMaxLength: Int = 16
 
 
-    private var mLeftText: String = MyApp.instance.string(R.string.cancel)
-    private var mRightText: String = MyApp.instance.string(R.string.sure)
+    private var mLeftText: String = ""
+    private var mRightText: String = ""
     private var leftClicks: (() -> Unit)? = null
     private var rightClicks: ((String) -> Unit)? = null
 
@@ -50,6 +50,9 @@ class DSLEditDialog : BaseFragmentDialog() {
     private lateinit var edit: AppCompatEditText
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.layout_edit_dialog, container, false)
+        mColor = mContext.color(R.color.colorAccent)
+        mLeftText = mContext.string(R.string.cancel)
+        mRightText = mContext.string(R.string.sure)
         rootView = view
         edit = view.findViewById<AppCompatEditText>(R.id.labelEdit)
         edit.setText(mDefault)

@@ -26,16 +26,18 @@ open class AskDialog : BaseFragmentDialog() {
     var mMessage: String? = null
     var msgGravity: Int = Gravity.CENTER
     var onlySure: Boolean = false
-    var mColor: Int = MyApp.instance.color(R.color.colorAccent)
-    var mCancelText: String = MyApp.instance.string(R.string.cancel)
-    var mSureText: String = MyApp.instance.string(R.string.sure)
+    var mColor: Int = 0
+    var mCancelText: String = ""
+    var mSureText: String = ""
 
     protected var cancelClicks: (() -> Unit)? = null
     protected var sureClicks: (() -> Unit)? = null
 
     override fun setView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         val view = inflater.inflate(R.layout.layout_ask_dialog, container, false)
-
+        mCancelText = mContext.string(R.string.cancel)
+        mSureText = mContext.string(R.string.sure)
+        mColor = mContext.color(R.color.colorAccent)
         val dialogTitle = view.findViewById<AppCompatTextView>(R.id.title)
         val dialogMessage = view.findViewById<AppCompatTextView>(R.id.message)
         val sureButton = view.findViewById<AppCompatTextView>(R.id.sure)
