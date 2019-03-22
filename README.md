@@ -1,4 +1,8 @@
 # FancyDialog
+
+[![](https://jitpack.io/v/o0o0oo00/FancyDialog.svg)](https://jitpack.io/#o0o0oo00/FancyDialog)
+
+
 ## DSL风格代替Builder模式
 
 ### 什么是DSL
@@ -8,6 +12,7 @@ Java使用Builder来构建复杂对象。
 而Kotlin中配合**lambad** 使用DSL风格 将使复杂对象的构建更加可读，更清晰，更简洁
 
 书写起来**舒服顺手**
+配置项为更简洁的代码、用多少写多少、不用不写，岂不美哉~
 
 首先我们要明白`lambda`的几个特性
 
