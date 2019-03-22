@@ -1,6 +1,7 @@
 package com.zcy.fancydialog
 
 import android.content.Context
+import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -93,9 +94,9 @@ abstract class BaseFragmentDialog : DialogFragment() {
         }
     }
 
-    override fun dismiss() {
+    override fun onDismiss(dialog: DialogInterface) {
         disListener?.invoke()
-        super.dismiss()
+        super.onDismiss(dialog)
     }
 
     fun onShow(listener: () -> Unit) {
