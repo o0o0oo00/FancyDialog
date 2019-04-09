@@ -15,14 +15,21 @@ allprojects {
 
 ## DSL风格代替Builder模式
 
-### 什么是DSL
 domain specific language / DSL  **一组特定的语言结构**  
+
 DSL风格或者也可以说是**函数式风格**  
+
 Java使用Builder来构建复杂对象。  
+
 而Kotlin中配合**lambad** 使用DSL风格 将使复杂对象的构建更加可读，更清晰，更简洁
 
 书写起来**舒服顺手**
+
+**`FancyDialog`** 拥有诸多的配置选项、基本上涵盖了日常开发使用的方方面面
+
 配置项为更简洁的代码、用多少写多少、不用不写，岂不美哉~
+
+安排！
 
 首先我们要明白`lambda`的几个特性
 
@@ -37,6 +44,7 @@ Java使用Builder来构建复杂对象。
 使用高阶函数会带来一些运行时的效率损失：每一个函数都是一个对象，并且会捕获一个闭包。 即那些在函数体内会访问到的变量。 内存分配（对于函数对象和类）和虚拟调用会引入运行时间开销。  
 进而使用 **`inline`** 修饰函数
 
+
 使用姿势
 
 关键属性解析
@@ -48,6 +56,8 @@ Java使用Builder来构建复杂对象。
 * `lowerBackground` 降级dialog背景，配合[newToast](https://github.com/o0o0oo00/NewToast)可实现 Alert警告框不会被Dialog阴影覆盖掉
 
 下面提供几种常见的dialog使用形式
+
+**如果需要其他使用类型，请自行继承Base，相信我，它超级简单的 ！** (*￣3￣)╭ 
 
 ### askDialog
 #### normal
