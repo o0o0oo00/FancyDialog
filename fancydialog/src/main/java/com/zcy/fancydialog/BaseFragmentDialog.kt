@@ -5,10 +5,7 @@ import android.content.DialogInterface
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.view.Gravity
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.FragmentManager
@@ -57,12 +54,14 @@ abstract class BaseFragmentDialog : DialogFragment() {
     /**** 降低背景的Window等级 ****/
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        if (lowerBackground) mContext.setBackgroundAlpha(0.35F)
+        if (lowerBackground) mContext.setBackgroundAlpha((activity?.window?.attributes?.alpha
+            ?: 1F) * 0.35F)
         super.onViewCreated(view, savedInstanceState)
     }
 
     override fun onDestroyView() {
-        if (lowerBackground) mContext.setBackgroundAlpha(1F)
+        if (lowerBackground) mContext.setBackgroundAlpha((activity?.window?.attributes?.alpha
+            ?: 1F) / 0.35F)
         super.onDestroyView()
     }
 
@@ -115,6 +114,12 @@ abstract class BaseFragmentDialog : DialogFragment() {
         viewLoadedListener = listener
     }
 
+    private val keylistener = object : DialogInterface.OnKeyListener {
+        override fun onKey(dialog: DialogInterface?, keyCode: Int, event: KeyEvent?): Boolean {
+            return keyCode == KeyEvent.KEYCODE_BACK && event?.repeatCount == 0
+        }
+    }
+
     /**
      * 设置统一样式
      */
@@ -140,6 +145,10 @@ abstract class BaseFragmentDialog : DialogFragment() {
         //设置动画
         mAnimation?.also { window.setWindowAnimations(it) }
         window.attributes = wlp
+
+        if (!touchOutside) {
+            dialog?.setOnKeyListener(keylistener)
+        }
     }
 
 }
