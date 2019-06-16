@@ -2,6 +2,7 @@ package com.zcy.nidavellir.fancydialog
 
 import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
 import android.view.Gravity
 import android.view.View
 import android.widget.Toast
@@ -66,6 +67,18 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    fun warning(view: View) {
+        askDialog(supportFragmentManager) {
+            mTitle = "Lower"
+            lowerBackground = true
+        }
+        Handler().postDelayed({
+            warning(supportFragmentManager){
+                mWarningText = "warning!!!!"
+            }
+        },1000)
+    }
+
     fun list(view: View) {
         lateinit var dialog: ListDialog
         val click: (View, Int) -> Unit = { v, position ->
@@ -73,7 +86,7 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this@MainActivity, (v.tag as String), Toast.LENGTH_SHORT).show()
         }
         val longClick: (View, Int) -> Unit = { v, position ->
-//            dialog.dismiss()
+            //            dialog.dismiss()
             Toast.makeText(this@MainActivity, "longClick" + (v.tag as String), Toast.LENGTH_SHORT).show()
         }
         dialog = listDialog {

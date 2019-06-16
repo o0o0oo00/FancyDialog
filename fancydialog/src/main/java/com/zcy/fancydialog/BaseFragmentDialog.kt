@@ -69,7 +69,7 @@ abstract class BaseFragmentDialog : DialogFragment() {
      * 防止同时弹出两个dialog
      */
     override fun show(manager: FragmentManager, tag: String?) {
-        if (isDoubleClick() || activity?.isFinishing == true) {
+        if (activity?.isFinishing == true || activity?.isDestroyed == true) {
             return
         }
         showListener?.invoke()

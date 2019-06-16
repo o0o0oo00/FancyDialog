@@ -44,6 +44,13 @@
 
     <androidx.appcompat.widget.AppCompatButton
         android:layout_width="wrap_content"
+        android:text="warning"
+        android:onClick="warning"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false" />
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false" />
 
